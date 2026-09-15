@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" shape-rendering="crispEdges">
+  <rect width="32" height="32" fill="#0a0c14"/>
+  <!-- Yellow Pixel Car -->
+  <rect x="8" y="10" width="16" height="6" fill="#38bdf8"/>
+  <rect x="6" y="16" width="20" height="8" fill="#f59e0b"/>
+  <rect x="4" y="18" width="2" height="4" fill="#fde047"/>
+  <rect x="26" y="18" width="2" height="4" fill="#ef4444"/>
+  <!-- Wheels -->
+  <rect x="7" y="24" width="5" height="4" fill="#1e293b"/>
+  <rect x="20" y="24" width="5" height="4" fill="#1e293b"/>
+</svg>
