@@ -47,7 +47,7 @@ export class MainMenu {
   _handleButton(id) {
     switch (id) {
       case 'start':
-        this.game.startLevel(1);
+        this.game.setState(GameState.LEVEL_SELECT);
         break;
       case 'options':
         this.game.setState(GameState.OPTIONS);

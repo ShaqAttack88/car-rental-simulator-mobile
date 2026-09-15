@@ -12,6 +12,62 @@ const STANDARD_QUEUE_POSITIONS = [
   { x: 8,  y: 16, inLot: false }, // Index 5: On road waiting line
 ];
 
+// 4 Difficulty Levels dictating car spawn frequency, starting cash & patience
+export const DIFFICULTIES = {
+  1: {
+    id: 1,
+    name: 'EASY',
+    badge: '1:EASY',
+    startingCash: 250,
+    spawnInterval: [5.0, 7.5],
+    carPatience: 22,
+    color: '#34d399',
+    bg: '#064e3b',
+    border: '#34d399',
+    title: 'CASUAL MODE',
+    desc: 'Relaxed traffic flow, rich starter budget ($250)',
+  },
+  2: {
+    id: 2,
+    name: 'NORMAL',
+    badge: '2:NORM',
+    startingCash: 100,
+    spawnInterval: [3.0, 5.0],
+    carPatience: 16,
+    color: '#38bdf8',
+    bg: '#0c4a6e',
+    border: '#38bdf8',
+    title: 'STANDARD MODE',
+    desc: 'Balanced arrivals & standard budget ($100)',
+  },
+  3: {
+    id: 3,
+    name: 'HARD',
+    badge: '3:HARD',
+    startingCash: 40,
+    spawnInterval: [2.0, 3.5],
+    carPatience: 12,
+    color: '#f59e0b',
+    bg: '#78350f',
+    border: '#f59e0b',
+    title: 'PRO MODE',
+    desc: 'Rush hour flow & tight starting budget ($40)',
+  },
+  4: {
+    id: 4,
+    name: 'EPIC',
+    badge: '4:EPIC',
+    startingCash: 0,
+    spawnInterval: [1.3, 2.2],
+    carPatience: 9,
+    color: '#ef4444',
+    bg: '#7f1d1d',
+    border: '#f87171',
+    title: '🔥 EPIC MODE',
+    desc: 'Relentless flood, $0 cash, PRO SKILLS REQUIRED!',
+  },
+};
+
 export const LEVELS = {
   1: {
     levelNumber: 1,

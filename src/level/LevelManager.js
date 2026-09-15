@@ -2,7 +2,7 @@
 // LevelManager.js — Level lifecycle, scene rendering, game loop
 // ============================================================
 
-import { LEVELS } from './LevelConfig.js';
+import { LEVELS, DIFFICULTIES } from './LevelConfig.js';
 import { CarQueue } from '../cars/CarQueue.js';
 import { CarSpawner } from '../cars/CarSpawner.js';
 import { CarState } from '../cars/CarState.js';
@@ -55,7 +55,14 @@ export class LevelManager {
     return all;
   }
 
-  startLevel(levelNumber = 1) {
+  startLevel(levelNumber = 1, difficultyLevel = null) {
+    if (difficultyLevel !== null && difficultyLevel !== undefined) {
+      this.currentDifficulty = difficultyLevel;
+    } else if (!this.currentDifficulty) {
+      this.currentDifficulty = 2; // Default to Level 2 (NORMAL)
+    }
+    const diff = DIFFICULTIES[this.currentDifficulty] || DIFFICULTIES[2];
+
     this.currentLevelNumber = levelNumber;
     this.config = LEVELS[levelNumber];
     if (!this.config) {
@@ -64,7 +71,8 @@ export class LevelManager {
       this.config = LEVELS[1];
     }
 
-    this.score = 0;
+    // 1. Money starts according to selected difficulty ($250, $100, $40, $0)
+    this.score = diff.startingCash;
     this.rentals = 0;
     this.reputation = 0; // Starts at 0 for every run
     this.barrierProgress = 0;
@@ -111,21 +119,22 @@ export class LevelManager {
       this.config.entranceX
     );
 
-    // Create spawner (passes level for car collision awareness)
+    // Create spawner with difficulty spawn frequency and car patience:
     this.spawner = new CarSpawner(this.game.sprites, this.queue, {
       entranceX: this.config.entranceX,
       entranceY: this.config.entranceY,
       roadY: this.config.roadY,
     }, this);
-    this.spawner.minInterval = this.config.spawnInterval[0];
-    this.spawner.maxInterval = this.config.spawnInterval[1];
+    this.spawner.minInterval = diff.spawnInterval[0];
+    this.spawner.maxInterval = diff.spawnInterval[1];
+    this.spawner.carPatience = diff.carPatience;
 
     // Wire up highlighter
     this.game.highlighter.setFacilities(this.facilities);
   }
 
   restartCurrentLevel() {
-    this.startLevel(this.currentLevelNumber);
+    this.startLevel(this.currentLevelNumber, this.currentDifficulty);
   }
 
   addScore(amount) {

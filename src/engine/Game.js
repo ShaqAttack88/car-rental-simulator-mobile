@@ -15,9 +15,11 @@ import { ExitScreen } from '../ui/ExitScreen.js';
 import { ShopUI } from '../ui/ShopUI.js';
 import { SoundEffects } from '../audio/SoundEffects.js';
 import { FloatingTextManager } from '../ui/FloatingText.js';
+import { LevelSelectScreen } from '../ui/LevelSelectScreen.js';
 
 export const GameState = {
   MAIN_MENU: 'mainMenu',
+  LEVEL_SELECT: 'levelSelect',
   OPTIONS: 'options',
   EXIT_SCREEN: 'exitScreen',
   PLAYING: 'playing',
@@ -41,6 +43,7 @@ export class Game {
 
     // Menu screens
     this.mainMenu = null;
+    this.levelSelectScreen = null;
     this.optionsMenu = null;
     this.exitScreen = null;
 
@@ -68,6 +71,7 @@ export class Game {
     this.shopUI = new ShopUI(this);
 
     this.mainMenu = new MainMenu(this);
+    this.levelSelectScreen = new LevelSelectScreen(this);
     this.optionsMenu = new OptionsMenu(this);
     this.exitScreen = new ExitScreen(this);
 
@@ -82,9 +86,9 @@ export class Game {
     this.state = newState;
   }
 
-  startLevel(levelNumber = 1) {
+  startLevel(levelNumber = 1, difficulty = 2) {
     this.floatingText.clear();
-    this.level.startLevel(1);
+    this.level.startLevel(levelNumber, difficulty);
     this.state = GameState.PLAYING;
   }
 
@@ -103,6 +107,10 @@ export class Game {
     switch (this.state) {
       case GameState.MAIN_MENU:
         this.mainMenu.update(dt);
+        break;
+
+      case GameState.LEVEL_SELECT:
+        this.levelSelectScreen.update(dt);
         break;
 
       case GameState.OPTIONS:
@@ -142,7 +150,7 @@ export class Game {
               this.state = GameState.PLAYING;
               break;
             case 'restart':
-              this.startLevel(1);
+              this.startLevel(this.level.currentLevelNumber, this.level.currentDifficulty);
               break;
             case 'menu':
               this.state = GameState.MAIN_MENU;
@@ -161,6 +169,10 @@ export class Game {
     switch (this.state) {
       case GameState.MAIN_MENU:
         this.mainMenu.render(ctx);
+        break;
+
+      case GameState.LEVEL_SELECT:
+        this.levelSelectScreen.render(ctx);
         break;
 
       case GameState.OPTIONS:

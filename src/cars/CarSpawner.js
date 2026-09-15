@@ -42,6 +42,10 @@ export class CarSpawner {
   _spawnCar() {
     const car = new CarController(this.nextId++, this.sprites);
     car.level = this.level;
+    if (this.carPatience) {
+      car.maxPatience = this.carPatience;
+      car.patience = this.carPatience;
+    }
 
     // Start off-screen left on the road
     car.x = -16;
